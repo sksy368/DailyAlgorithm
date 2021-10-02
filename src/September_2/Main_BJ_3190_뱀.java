@@ -13,7 +13,7 @@ public class Main_BJ_3190_뱀 {
 		}
 	}
 	
-	static class Coordi {
+	static class Coordi { 
 		int x;
 		char c;
 		Coordi(int x, char c){
