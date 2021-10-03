@@ -22,7 +22,6 @@ public class Main_BJ_7576_토마토 {
 	static int[] dr = {-1, 1, 0, 0};
 	static int[] dc = {0, 0, -1, 1};
 	
-	
 	static void bfs() {
 		while(!queue.isEmpty()) {
 			Tomato cur = queue.poll();
@@ -36,13 +35,12 @@ public class Main_BJ_7576_토마토 {
 					queue.offer(new Tomato(r, c, cur.time+1));
 					checked[r][c] = true;
 					box[r][c] = 1;
-					unripe--; // 익지 않은 토마토 개수 감소
+					unripe--;
 				}
 			}
 		}
 		
 	}
-	
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -68,7 +66,7 @@ public class Main_BJ_7576_토마토 {
 		
 		bfs();
 		
-		if(unripe == 0) System.out.println(time); // 토마토가 전부 익은 경우
-		else System.out.println(-1); // 익지 않은 토마토가 있을 경우
+		if(unripe == 0) System.out.println(time);
+		else System.out.println(-1);
 	}
 }
