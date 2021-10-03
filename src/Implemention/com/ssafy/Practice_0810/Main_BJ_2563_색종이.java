@@ -1,4 +1,4 @@
-package Implemention.com.ssafy.Practice0810;
+package Implemention.com.ssafy.Practice_0810;
 
 import java.util.*;
 import java.io.*;
