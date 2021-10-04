@@ -11,7 +11,7 @@ public class MSTKruskalTest {
 			super();
 			this.start = start;
 			this.end = end;
-			this.weight = weight;
+			this.weight = weight; 
 		}
 		
 		public int compareTo(Edge o) {
