@@ -63,8 +63,6 @@ public class Main_BJ_15591_MooTube {
 			adjList[q].add(new Edge(p, r));
 		}
 		
-		
-		
 		for(int q = 0; q < Q; q++) {
 			st = new StringTokenizer(br.readLine());
 			int k = Integer.parseInt(st.nextToken());
@@ -84,7 +82,5 @@ public class Main_BJ_15591_MooTube {
 			
 			System.out.println(cnt);
 		}
-
 	}
-
 }
