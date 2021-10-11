@@ -1,4 +1,4 @@
-package September_3;
+package September.week3;
 
 import java.util.*;
 
