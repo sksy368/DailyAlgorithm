@@ -38,7 +38,7 @@ public class Main_BJ_1966_프린터큐 {
 			while(true) {
 				Point cur = queue.poll();
 				
-				Iterator it = queue.iterator();
+				Iterator<Point> it = queue.iterator();
 				boolean flag = true;
 				
 				while(it.hasNext()) { // 중요도가 가장 높은지 체크
