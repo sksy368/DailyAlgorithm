@@ -3,7 +3,7 @@ package October.week3;
 import java.util.*;
 import java.io.*;
 
-public class Main_BJ_14938_서강그라운드 {
+public class Main_BJ_14938_서강그라운드_FloydWarshall {
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
