@@ -36,10 +36,8 @@ public class Main_BJ_2512_예산 {
 				upperLimit = (budgetMin + budgetMax) / 2; // 상한값 조정
 				
 				int sum = 0;
-				for(int n = 0; n < N; n++) {
-					if(budget[n] > upperLimit) sum += upperLimit;
-					else sum += budget[n];
-				}
+				for(int n = 0; n < N; n++)
+					sum += budget[n] > upperLimit ? sum += upperLimit : budget[n];
 				
 				if(sum == M) { // 해당 상한값으로 계산했을 때 총 예산인 경우
 					answer = upperLimit;
