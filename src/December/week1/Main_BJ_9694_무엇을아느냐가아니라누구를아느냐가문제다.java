@@ -21,12 +21,11 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 	
 	static int N, M;
 	static ArrayList<Person>[] people;
-	static ArrayList<Integer>[] result;
-	static LinkedList<Integer> answer;
 	
 	static PriorityQueue<Person> queue;
 	static boolean[] checked;
 	static int[] distance;
+	static String[] path;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,13 +38,9 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 			N = Integer.parseInt(st.nextToken()); // 관계의 수
 			M = Integer.parseInt(st.nextToken()); // 정치인의 수
 			people = new ArrayList[M];
-			result = new ArrayList[M];
 			
-			for(int m = 0; m < M; m++) {
-				people[m] = new ArrayList<Person>();
-				result[m] = new ArrayList<Integer>();
-			}
-			
+			for(int m = 0; m < M; m++) people[m] = new ArrayList<Person>();
+	
 			for(int n = 0; n < N; n++) {
 				st = new StringTokenizer(br.readLine());
 				
@@ -60,27 +55,23 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 			dijkstra();
 			
 			System.out.print("Case #" + t + ": ");
-			if(answer != null) {
-				for(int i = 0; i < answer.size(); i++)
-					System.out.print(answer.get(i) + " ");
-				System.out.println();
-			}
-			else
-				System.out.println(-1);
+			
+			if(path[M-1] != null) System.out.println(path[M-1]);
+			else System.out.println(-1);
 		}
 	}
 	
 	static void dijkstra() {
 		queue = new PriorityQueue<>();
-		checked = new boolean[N];
-		distance = new int[N]; Arrays.fill(distance, 987654321);
+		checked = new boolean[M];
+		distance = new int[M]; Arrays.fill(distance, 987654321);
+		path = new String[M];
 		
 		queue.offer(new Person(0, 0));
 		distance[0] = 0;
+		path[0] = "0 ";
 		
-		boolean flag = false;
-		
-		loop:while(!queue.isEmpty()) {
+		while(!queue.isEmpty()) {
 			Person cur = queue.poll();
 			
 			if(checked[cur.friend]) continue;
@@ -92,46 +83,8 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 					distance[next.friend] = distance[cur.friend] + next.friendship;
 					queue.offer(new Person(next.friend, distance[next.friend]));
 					
-					result[cur.friend].add(next.friend);
-					
-					if(next.friend == M-1) {
-						flag = true;
-						break loop;
-					}
+					path[next.friend] = path[cur.friend] + next.friend + " ";
 				}
-			}
-		}
-		
-		for(int i = 0; i < result.length; i++)
-			System.out.println(result[i].toString());
-		
-		if(flag) bfs();
-		else return;
-	}
-	
-	static void bfs() {
-		Queue<LinkedList<Integer>> queue = new LinkedList<>();
-		LinkedList<Integer> list = new LinkedList<>();
-		list.add(0);
-		queue.offer(list);
-		
-		answer = new LinkedList<Integer>();
-		
-		while(!queue.isEmpty()) {
-			LinkedList<Integer> cur = queue.poll();
-			
-			
-			for(int n : result[cur.get(cur.size()-1)]) {
-				LinkedList<Integer> tmp = new LinkedList<>();
-				tmp.addAll(cur);
-				tmp.add(n);
-				
-				if(n == M-1) {
-					answer.addAll(tmp);
-					return;
-				}
-				
-				queue.offer(tmp);
 			}
 		}
 	}
