@@ -24,87 +24,31 @@ public class Main_BJ_1687_행렬찾기 {
 			for(int m = 0; m < M; m++) arr[n][m] = Integer.parseInt(s.charAt(m)+"");
 		}
 		
-		for(int n = 0; n < N; n++) {
-			for(int m = 0; m < M; m++) {
-				if((N-n)*(M-m) <= max)
-					break;
-				if(arr[n][m] == 0)
-					findLength(n, m);
-			}
-		}
+		divide(0, 0, N, M);
 		
 		System.out.println(max);
 	}
 	
-	public static void findLength(int startR, int startC) {
-		int rowLength = 0;
-		int columnLength = 0;
+	public static void divide(int startR, int startC, int sizeR, int sizeC) {
+		int newSizeR = sizeR/2;
+		int newSizeC = sizeC/2;
 		
-		for(int r = startR; r < N; r++) {
-			if(arr[r][startC] == 0) rowLength++;
-			else break;
-		}
-		
-		for(int c = startC; c < M; c++) {
-			if(arr[startR][c] == 0) columnLength++;
-			else break;
-		}
-		
-		if(rowLength*columnLength <= max*max) return;
-		
-		checkRow(startR, startC+1, startC+1, rowLength);
-		
-		int rowLength = 0;
-		for(int r = startR; r < startR+columnLength; r++) {
-			if(arr[r][nowC] == 0) rowLength++;
-			else break;
-		}
+		boolean one = allZero(startR, startC, newSizeR, newSizeC);
+		boolean two = allZero(startR, startC+newSizeC, (newSizeR+1)/2, (newSizeC+1)/2);
+		boolean three = allZero(startR+newSizeR, startC, (newSizeR+1)/2, (newSizeC+1)/2);
+		boolean four = allZero(startR+newSizeR, startC+newSizeC, (newSizeR+1)/2, (newSizeC+1)/2);
 		
 		
-		checkColumn(startR+1, startC, startR+1, columnLength);
 	}
 	
-	public static void checkRow(int startR, int startC, int nowC, int minRowLength) {
-		if(nowC >= M) {
-			max = Math.max(M-1 * minRowLength, max);
-			return;
+	public static boolean allZero(int startR, int startC, int sizeR, int sizeC) {
+		
+		for(int i = startR; i < startR+sizeR; i++) {
+			for(int j = startC; j < startC+sizeC; j++) {
+				if(arr[i][j] != 0) return false;
+			}
 		}
 		
-		int rowLength = 0;
-		
-		for(int r = startR; r < startR+minRowLength; r++) {
-			if(arr[r][nowC] == 0) rowLength++;
-			else break;
-		}
-		
-		System.out.println("현재 : " + startR + "," + nowC + " --> max : " + max); //////////
-		
-		if(rowLength == 0) {
-			max = Math.max((nowC-startC)*minRowLength, max);
-			return;
-		}
-		else
-			checkRow(startR, startC, startC+1, Math.min(rowLength, minRowLength));
-	}
-	
-	public static void checkColumn(int startR, int startC, int nowR, int minColumnLength) {
-		if(nowR >= N) {
-			max = Math.max(N-1 * minColumnLength, max);
-			return;
-		}
-		
-		int columnLength = 0;
-		
-		for(int c = startC; c < startR+minColumnLength; c++) {
-			if(arr[nowR][c] == 0) columnLength++;
-			else break;
-		}
-		
-		if(columnLength == 0) {
-			max = Math.max((nowR-startR)*minColumnLength, max);
-			return;
-		}
-		else
-			checkColumn(startR, startC, startR+1, Math.min(columnLength, minColumnLength));
+		return true;
 	}
 }
