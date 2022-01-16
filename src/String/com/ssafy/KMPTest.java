@@ -42,7 +42,7 @@ public class KMPTest {
 		}
 		
 		System.out.println(cnt);
-		
+		 
 		if(cnt > 0)
 			System.out.println(list);
 	}
