@@ -1,4 +1,4 @@
-package January;
+package Jan_2022.week1;
 
 import java.util.*;
 import java.io.*;
@@ -18,37 +18,14 @@ public class Main_BJ_1687_행렬찾기 {
 		arr = new int[N][M];
 		max = 1;
 		
-		for(int n = 0;  n < N; n++) {
+		for(int n = 1;  n <= N; n++) {
 			String s = br.readLine();
 			
-			for(int m = 0; m < M; m++) arr[n][m] = Integer.parseInt(s.charAt(m)+"");
+			for(int m = 1; m <= M; m++) arr[n][m] = Integer.parseInt(s.charAt(m)+"");
 		}
 		
-		divide(0, 0, N, M);
-		
-		System.out.println(max);
-	}
-	
-	public static void divide(int startR, int startC, int sizeR, int sizeC) {
-		int newSizeR = sizeR/2;
-		int newSizeC = sizeC/2;
-		
-		boolean one = allZero(startR, startC, newSizeR, newSizeC);
-		boolean two = allZero(startR, startC+newSizeC, (newSizeR+1)/2, (newSizeC+1)/2);
-		boolean three = allZero(startR+newSizeR, startC, (newSizeR+1)/2, (newSizeC+1)/2);
-		boolean four = allZero(startR+newSizeR, startC+newSizeC, (newSizeR+1)/2, (newSizeC+1)/2);
+		int[][] D = new int[N+1][M+1];
 		
 		
-	}
-	
-	public static boolean allZero(int startR, int startC, int sizeR, int sizeC) {
-		
-		for(int i = startR; i < startR+sizeR; i++) {
-			for(int j = startC; j < startC+sizeC; j++) {
-				if(arr[i][j] != 0) return false;
-			}
-		}
-		
-		return true;
 	}
 }

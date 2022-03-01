@@ -1,4 +1,4 @@
-package October.week2;
+package Oct_2021.week2;
 
 import java.io.*;
 

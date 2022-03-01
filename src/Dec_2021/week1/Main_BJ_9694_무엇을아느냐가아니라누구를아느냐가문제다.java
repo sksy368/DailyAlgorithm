@@ -1,4 +1,4 @@
-package December.week1;
+package Dec_2021.week1;
 
 import java.util.*;
 import java.io.*;
@@ -65,7 +65,7 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 		queue = new PriorityQueue<>();
 		checked = new boolean[M];
 		distance = new int[M]; Arrays.fill(distance, 987654321);
-		path = new String[M];
+		path = new String[M]; // 한신이부터 각각까지의 최소 경로
 		
 		queue.offer(new Person(0, 0));
 		distance[0] = 0;
@@ -75,7 +75,6 @@ public class Main_BJ_9694_무엇을아느냐가아니라누구를아느냐가문
 			Person cur = queue.poll();
 			
 			if(checked[cur.friend]) continue;
-			//System.out.println(cur.friend); //remove
 			checked[cur.friend] = true;
 			
 			for(Person next : people[cur.friend]) {
