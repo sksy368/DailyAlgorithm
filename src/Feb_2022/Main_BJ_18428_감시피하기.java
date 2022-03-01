@@ -6,7 +6,7 @@ import java.util.*;
 public class Main_BJ_18428_감시피하기 {
 	
 	static class Coordi {
-		int row, column;
+		int row, column; 
 		public Coordi(int row, int column) {
 			this.row = row;
 			this.column = column;
