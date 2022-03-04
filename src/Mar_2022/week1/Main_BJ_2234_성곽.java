@@ -5,39 +5,32 @@ import java.util.*;
 
 public class Main_BJ_2234_성곽 {
 	
-	static int[][] D = {{0, 1}, {-1, 0}, {0, 1}, {1, 0}}; // 서, 북, 동, 남
+	static int[][] D = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}}; // 서, 북, 동, 남
 
 	static int M, N, roomNum, maxArea, removeMaxArea;
-	static int[][] castle;
+	static int[][] castle, roomNo;
 	
-	static ArrayList<int[]>[][] adjList;
-	static HashMap<int[], Integer> roomArea;
+	static ArrayList<int[]> roomInfo;
 	static boolean[][] checked;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception  {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		M = Integer.parseInt(st.nextToken()); // 성곽의 크기(세로)
 		N = Integer.parseInt(st.nextToken()); // 성곽의 크기(가로)
+		M = Integer.parseInt(st.nextToken()); // 성곽의 크기(세로)
 		
 		castle = new int[M][N]; // 성곽에 대한 정보
 		
-		adjList = new ArrayList[M][N]; // 이동 가능 경로
-		
 		for(int m = 0; m < M; m++) {
 			st = new StringTokenizer(br.readLine());
-			for(int n = 0; n < N; n++) {
-				int num = Integer.parseInt(st.nextToken()); // +1:서쪽 벽, +2:북쪽 벽, +4:동쪽 벽, +8:남쪽 벽
-				adjList[m][n] = new ArrayList<int[]>();
-				
-				for(int b = 0; b < 4; b++)
-					if(num != (num | 1<<b)) adjList[m][n].add(new int[] {m+D[b][0], n+D[b][1]}); // 벽이 없는 경우
-			}
+			for(int n = 0; n < N; n++)
+				castle[m][n] = Integer.parseInt(st.nextToken()); // +1:서쪽 벽, +2:북쪽 벽, +4:동쪽 벽, +8:남쪽 벽
 		}
 		
 		roomNum = maxArea = removeMaxArea = 0;
-		roomArea = new HashMap<>(); // 방의 시작점, 방들의 넓이
+		roomNo = new int[M][N]; // 각 방의 번호
+		roomInfo = new ArrayList<>(); // 방의 시작점, 방들의 넓이
 		checked = new boolean[M][N];
 		
 		// 각 방의 넓이 구하기
@@ -50,12 +43,11 @@ public class Main_BJ_2234_성곽 {
 			}
 		}
 		
-		for(int m = 0; m < M; m++) {
-			for(int n = 0; n < N; n++) {
-				
-			}
-		}
+		checked = new boolean[M][N];
 		
+		// 벽 한 개를 제거했을 때 방 넓이의 최대값 구하기
+		for(int i = 0; i < roomInfo.size(); i++)
+			checkNext(i, roomInfo.get(i)[0], roomInfo.get(i)[1]);
 		
 		System.out.println(roomNum + "\n" + maxArea + "\n" + removeMaxArea);
 	}
@@ -67,22 +59,55 @@ public class Main_BJ_2234_성곽 {
 		
 		queue.offer(new int[] {row, column});
 		checked[row][column] = true;
-		
+		roomNo[row][column] = roomNum; // 방 번호 표시
+		 
 		while(!queue.isEmpty()) {
 			int[] cur = queue.poll();
+			int curR = cur[0];
+			int curC = cur[1];
+			int num = castle[curR][curC];
 			
-			for(int[] next : adjList[cur[0]][cur[1]]) {
-				if(!checked[next[0]][next[1]]) {
-					queue.offer(new int[] {next[0], next[1]});
-					checked[next[0]][next[1]] = true;
+			for(int b = 0; b < 4; b++) {
+				int nextR = curR+D[b][0];
+				int nextC = curC+D[b][1];
+				
+				if(num != (num | 1<<b) && !checked[nextR][nextC]) {
+					queue.offer(new int[] {nextR, nextC}); 
+					checked[nextR][nextC] = true;
 					
-					castle[next[0]][next[1]] = roomNum; // 방 번호 표시
-					area++; // 방 넓이 추가
+					roomNo[nextR][nextC] = roomNum; // 방 번호 표시
+					area++; // 방 넓이 갱신
 				}
 			}
 		}
 		
-		roomArea.put() // 방 넓이 저장
+		roomInfo.add(new int[] {row, column, area}); // 방의 시작점, 방의 넓이 저장
 		maxArea = Math.max(area, maxArea); // 방 넓이의 최대값 갱신
+	}
+	
+	
+	public static void checkNext(int no, int row, int column) {
+		Queue<int[]> queue = new LinkedList<>();
+		
+		queue.offer(new int[] {row, column});
+		checked[row][column] = true;
+		
+		while(!queue.isEmpty()) {
+			int[] cur = queue.poll();
+			
+			for(int d = 0; d < 4; d++) {
+				int nextR = cur[0] + D[d][0];
+				int nextC = cur[1] + D[d][1];
+				
+				if(nextR<0 || nextR>=M || nextC<0 || nextC>=N || checked[nextR][nextC]) continue;
+				
+				if(roomNo[row][column] == roomNo[nextR][nextC]) { // 같은 방인 경우
+					queue.offer(new int[] {nextR, nextC});
+					checked[nextR][nextC] = true;
+				}
+				else // 다른 방인 경우
+					removeMaxArea = Math.max(roomInfo.get(no)[2]+roomInfo.get(roomNo[nextR][nextC])[2], removeMaxArea);
+			}
+		}
 	}
 }
