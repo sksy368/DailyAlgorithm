@@ -27,7 +27,7 @@ public class Main_BJ_14889_스타트와링크 {
 		minDiff = Integer.MAX_VALUE;
 		select = new int[N/2];
 		
-		combination(0, 0); // 팀 나누기
+		combination(0, 0); // 스타트 팀 뽑기
 		
 		System.out.println(minDiff);
 	}
@@ -52,8 +52,8 @@ public class Main_BJ_14889_스타트와링크 {
 		
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < N; j++) {
-				if(set.contains(i) && set.contains(j)) skillSum1 += skill[i][j];
-				else if(!set.contains(i) && !set.contains(j)) skillSum2 += skill[i][j];
+				if(set.contains(i) && set.contains(j)) skillSum1 += skill[i][j]; // 스타트 팀인 경우
+				else if(!set.contains(i) && !set.contains(j)) skillSum2 += skill[i][j]; // 링크 팀인 경우
 			}
 		}
 		
