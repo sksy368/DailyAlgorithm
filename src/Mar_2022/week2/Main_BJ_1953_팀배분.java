@@ -27,8 +27,8 @@ public class Main_BJ_1953_팀배분 {
 			for(int h = 0; h < hate; h++) adjList[n].add(Integer.parseInt(st.nextToken()));
 		}
 		
-		blue = new ArrayList<Integer>();
-		white = new ArrayList<Integer>();
+		blue = new ArrayList<Integer>(); // 청팀인 사람
+		white = new ArrayList<Integer>(); // 백팀인 사람
 		checked = new boolean[N+1];
 		
 		for(int n = 1; n <= N; n++) {
