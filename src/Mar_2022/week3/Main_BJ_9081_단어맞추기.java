@@ -43,7 +43,7 @@ public class Main_BJ_9081_단어맞추기 {
 		for(int i = 0; i < wordArr.length; i++) {
 			if(checked[i]) continue;
 			checked[i] = true;
-			
+	
 			output[n] = i;
 			permutation(n+1);
 			checked[i] = false;
@@ -53,20 +53,23 @@ public class Main_BJ_9081_단어맞추기 {
 	public static void compare() {
 		String result = "";
 		char[] resultArr = new char[wordArr.length];
-		boolean flag = false;
+		boolean flag1 = false;
+		boolean flag2 = false;
+		
 		
 		for(int i = 0; i < wordArr.length; i++) {
-			if(wordArr[i]<wordArr[output[i]]) flag = true;
-			if(wordArr[output[i]]>answerArr[i]) return;
+			if(wordArr[i]<wordArr[output[i]]) flag1 = true;
+			if(wordArr[output[i]]<answerArr[i]) flag2 = true;
+			
+			if((!flag1&&wordArr[output[i]]<wordArr[i]) || (!flag2&&wordArr[output[i]]>answerArr[i])) return;
 			
 			result += wordArr[output[i]];
 			resultArr[i] = wordArr[output[i]];
 		}
 		
-		if(flag) {
+		if(flag1 && flag2) {
 			answerArr = resultArr;
 			answer = result;
 		}
-		
 	}
 }
