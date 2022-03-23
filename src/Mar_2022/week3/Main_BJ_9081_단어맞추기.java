@@ -4,72 +4,44 @@ import java.io.*;
 import java.util.*;
 
 public class Main_BJ_9081_단어맞추기 {
-	
-	static String word;
-	static char[] wordArr;
-	static int[] output;
-	static boolean[] checked;
-	static String answer;
-	static char[] answerArr;
 
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		
 		int T = Integer.parseInt(br.readLine());
 		for(int t = 0; t < T; t++) {
-			word = br.readLine();
-			wordArr = word.toCharArray();
+			String word = br.readLine();
 			
-			checked = new boolean[wordArr.length];
-			output = new int[wordArr.length];
-			answerArr = new char[wordArr.length];
-			answer = "";
-			
-			Arrays.fill(answerArr, 'Z');
-			
-			permutation(0);
-			
-			if(answer.equals("")) System.out.println(word);
-			System.out.println(answer);
-		}
-	}
-	
-	public static void permutation(int n) {
-		if(n == wordArr.length) {
-			compare();
-			return;
-		}
-		
-		for(int i = 0; i < wordArr.length; i++) {
-			if(checked[i]) continue;
-			checked[i] = true;
-	
-			output[n] = i;
-			permutation(n+1);
-			checked[i] = false;
-		}
-	}
-	
-	public static void compare() {
-		String result = "";
-		char[] resultArr = new char[wordArr.length];
-		boolean flag1 = false;
-		boolean flag2 = false;
-		
-		
-		for(int i = 0; i < wordArr.length; i++) {
-			if(wordArr[i]<wordArr[output[i]]) flag1 = true;
-			if(wordArr[output[i]]<answerArr[i]) flag2 = true;
-			
-			if((!flag1&&wordArr[output[i]]<wordArr[i]) || (!flag2&&wordArr[output[i]]>answerArr[i])) return;
-			
-			result += wordArr[output[i]];
-			resultArr[i] = wordArr[output[i]];
-		}
-		
-		if(flag1 && flag2) {
-			answerArr = resultArr;
-			answer = result;
+			int idx1 = -1;
+			int idx2 = 0;
+        
+            for(int i = word.length()-1; i > 0 ; i--) {
+                if(word.charAt(i-1) < word.charAt(i)) { // 바로 뒤에 있는 문자가 더 큰 경우
+                    idx1 = i-1;
+                    break;
+                }
+            }
+            
+            if(idx1 == -1)  // 내림차순인 경우 (모두 바로 앞에 있는 문자가 더 큰 경우) -> 주어진 단어가 마지막 단어인 경우
+                System.out.println(word);
+            else {
+                for(int i = word.length()-1; i >= 0; i--) {
+                    if(word.charAt(idx1) < word.charAt(i)) {
+                        idx2 = i;
+                        break;
+                    }
+                }
+                
+                char tmp = word.charAt(idx1);
+                word = word.substring(0, idx1) + word.charAt(idx2) + word.substring(idx1+1);
+                word = word.substring(0, idx2) + tmp + word.substring(idx2+1);
+                
+                char[] wordArr = word.toCharArray();
+                Arrays.sort(wordArr, idx1+1, wordArr.length);
+                
+                for(int i = 0; i < wordArr.length; i++) System.out.print(word);
+            }
 		}
 	}
 }

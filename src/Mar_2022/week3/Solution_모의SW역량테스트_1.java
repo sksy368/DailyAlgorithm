@@ -3,7 +3,7 @@ package Mar_2022.week3;
 import java.util.*;
 import java.io.*;
 
-public class Solution_SW_임시SW역량테스트_1 {
+public class Solution_모의SW역량테스트_1 {
 
 	static class Thing {
 		int row, column;

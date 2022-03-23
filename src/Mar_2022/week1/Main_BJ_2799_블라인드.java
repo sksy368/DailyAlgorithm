@@ -24,20 +24,16 @@ public class Main_BJ_2799_블라인드 {
 				for(int n = 0; n < N; n++) {
 					String line = st.nextToken();
 					
-					if(line.equals("****"))
-						windows[m][n] = g; // 블라인드의 마지막 위치 갱신
+					if(line.equals("****")) windows[m][n] = g; // 블라인드의 마지막 위치 갱신
 				}
 			}
 		}
 		br.readLine(); // 층 구분(#)
 		
 		for(int m = 0; m < M; m++) {
-			for(int n = 0; n < N; n++) {
-				typeNum[windows[m][n]]++; // 블라인드의 마지막 위치(= 창문 상태) 카운트
-			}
+			for(int n = 0; n < N; n++) typeNum[windows[m][n]]++; // 블라인드의 마지막 위치(= 창문 상태) 카운트
 		}
 		
-		for(int t = 0; t < 5; t++)
-			System.out.print(typeNum[t] + " ");
+		for(int t = 0; t < 5; t++) System.out.print(typeNum[t] + " ");
 	}
 }

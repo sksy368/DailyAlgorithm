@@ -3,15 +3,23 @@ package Mar_2022.week1;
 import java.io.*;
 import java.util.*;
 
-public class Main_BJ_2234_성곽 {
+public class Main_BJ_2234_성곽_1 {
+	
+	static class Room {
+		int area;
+		HashSet<Integer> close;
+		Room(int area, HashSet<Integer> close){
+			this.area = area;
+			this.close = close;
+		}
+	}
 	
 	static int[][] D = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}}; // 서, 북, 동, 남
 
 	static int M, N, roomNum, maxArea, removeMaxArea;
 	static int[][] castle, roomNo;
 	
-	static ArrayList<int[]> roomInfo;
-	static boolean[][] checked;
+	static ArrayList<Room> roomInfo;
 
 	public static void main(String[] args) throws Exception  {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,37 +36,37 @@ public class Main_BJ_2234_성곽 {
 				castle[m][n] = Integer.parseInt(st.nextToken()); // +1:서쪽 벽, +2:북쪽 벽, +4:동쪽 벽, +8:남쪽 벽
 		}
 		
-		roomNum = maxArea = removeMaxArea = 0;
+		roomNum = 1;
+		maxArea = removeMaxArea = 0;
 		roomNo = new int[M][N]; // 각 방의 번호
-		roomInfo = new ArrayList<>(); // 방의 시작점, 방들의 넓이
-		checked = new boolean[M][N];
+		roomInfo = new ArrayList<>(); // 방들의 넓이
 		
 		// 각 방의 넓이 구하기
 		for(int m = 0; m < M; m++) {
 			for(int n = 0; n < N; n++) {
-				if(!checked[m][n]) {
+				if(roomNo[m][n] == 0) {
 					findArea(m, n);
 					roomNum++; // 방 개수 갱신
 				}
 			}
 		}
 		
-		checked = new boolean[M][N];
-		
 		// 벽 한 개를 제거했을 때 방 넓이의 최대값 구하기
-		for(int i = 0; i < roomInfo.size(); i++)
-			checkNext(i, roomInfo.get(i)[0], roomInfo.get(i)[1]);
+		for(int i = 0; i < roomInfo.size(); i++){
+			for(int j : roomInfo.get(i).close)
+				removeMaxArea = Math.max(roomInfo.get(i).area+roomInfo.get(j).area, removeMaxArea);
+		}
 		
-		System.out.println(roomNum + "\n" + maxArea + "\n" + removeMaxArea);
+		System.out.println((roomNum-1) + "\n" + maxArea + "\n" + removeMaxArea);
 	}
 	
 	
 	public static void findArea(int row, int column) {
 		Queue<int[]> queue = new LinkedList<>();
+		HashSet<Integer> close = new HashSet<>();
 		int area = 1; // 방 넓이
 		
 		queue.offer(new int[] {row, column});
-		checked[row][column] = true;
 		roomNo[row][column] = roomNum; // 방 번호 표시
 		 
 		while(!queue.isEmpty()) {
@@ -71,43 +79,21 @@ public class Main_BJ_2234_성곽 {
 				int nextR = curR+D[b][0];
 				int nextC = curC+D[b][1];
 				
-				if(num != (num | 1<<b) && !checked[nextR][nextC]) {
-					queue.offer(new int[] {nextR, nextC}); 
-					checked[nextR][nextC] = true;
+				if(nextR<0 || nextR>=M || nextC<0 || nextC>=N) continue;
+				
+				if(num != (num | 1<<b) && roomNo[nextR][nextC]==0) {
+					queue.offer(new int[] {nextR, nextC});
 					
 					roomNo[nextR][nextC] = roomNum; // 방 번호 표시
 					area++; // 방 넓이 갱신
 				}
-			}
-		}
-		
-		roomInfo.add(new int[] {row, column, area}); // 방의 시작점, 방의 넓이 저장
-		maxArea = Math.max(area, maxArea); // 방 넓이의 최대값 갱신
-	}
-	
-	
-	public static void checkNext(int no, int row, int column) {
-		Queue<int[]> queue = new LinkedList<>();
-		
-		queue.offer(new int[] {row, column});
-		checked[row][column] = true;
-		
-		while(!queue.isEmpty()) {
-			int[] cur = queue.poll();
-			
-			for(int d = 0; d < 4; d++) {
-				int nextR = cur[0] + D[d][0];
-				int nextC = cur[1] + D[d][1];
-				
-				if(nextR<0 || nextR>=M || nextC<0 || nextC>=N || checked[nextR][nextC]) continue;
-				
-				if(roomNo[row][column] == roomNo[nextR][nextC]) { // 같은 방인 경우
-					queue.offer(new int[] {nextR, nextC});
-					checked[nextR][nextC] = true;
+				else if(roomNo[nextR][nextC]!=0 && roomNo[nextR][nextC]!=roomNum) {
+					close.add(roomNo[nextR][nextC]);
 				}
-				else // 다른 방인 경우
-					removeMaxArea = Math.max(roomInfo.get(no)[2]+roomInfo.get(roomNo[nextR][nextC])[2], removeMaxArea);
 			}
 		}
+		
+		roomInfo.add(new Room(area, close)); // 방의 시작점, 방의 넓이 저장
+		maxArea = Math.max(area, maxArea); // 방 넓이의 최대값 갱신
 	}
 }
