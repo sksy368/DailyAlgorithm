@@ -17,10 +17,9 @@ public class Solution_Programmers_64064_불량사용자 {
 	public static int solution(String[] user_id, String[] banned_id) { // 응모자 아이디 목록, 불량 사용자 아이디 목록
 		answer = 0;
         
-//        dfs(user_id, banned_id, 0, checked);
-        
         HashMap<String, HashSet<String>> map = new HashMap<>();
-        
+        HashMap<String, Integer> num = new HashMap<>();
+      
         for(int i = 0; i < banned_id.length; i++){
             for(int j = 0; j < user_id.length; j++){
                 if(isRight(banned_id[i], user_id[j])) {
@@ -74,10 +73,11 @@ public class Solution_Programmers_64064_불량사용자 {
 				if(s.length() != 0) {
 					int idx = user.indexOf(s, lastIdx);
 					lastIdx = idx + s.length();
+                    System.out.println("idx: " + idx + "   lastIdx: " + lastIdx);
 					list.add((char)idx);
 				}
 				else 
-					lastIdx = 1;
+					lastIdx = i+1;
 				
 				list.add('*');
 				s = "";
@@ -85,7 +85,17 @@ public class Solution_Programmers_64064_불량사용자 {
 			}
 			
 			s += ban.charAt(i);
+            System.out.println("s: " + s);
+            System.out.println("listSize: " + list.size());
 		}
+        if(s.length() != 0) {
+            int idx = user.indexOf(s, lastIdx);
+            lastIdx = idx + s.length();
+            list.add((char)idx);
+        }
+        
+        System.out.println("lastIdx: " + lastIdx);
+        System.out.println("listSize: " + list.size());
 		
 		if(lastIdx != user.length()) return false;
 		
