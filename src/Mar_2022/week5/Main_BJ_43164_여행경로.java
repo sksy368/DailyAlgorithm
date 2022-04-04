@@ -2,7 +2,7 @@ package Mar_2022.week5;
 
 import java.util.*;
 
-class Main_BJ_43164_여행경로 {
+class Solution_Programmers_43164_여행경로 {
 	
 	ArrayList<String> list = new ArrayList<>();
 	PriorityQueue<String> queue = new PriorityQueue<>();
