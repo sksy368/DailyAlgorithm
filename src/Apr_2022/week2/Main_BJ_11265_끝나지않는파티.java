@@ -16,12 +16,17 @@ public class Main_BJ_11265_끝나지않는파티 {
 		for(int n1 = 1; n1 <= N; n1++) {
 			st = new StringTokenizer(br.readLine());
 			
-			for(int n2 = 1; n2 <= N; n2++) map[n1][n2] = Integer.parseInt(st.nextToken());
+			for(int n2 = 1; n2 <= N; n2++) {
+				int T = Integer.parseInt(st.nextToken());
+				
+				if(n1!=n2 && T==0) map[n1][n2] = 1000000*N+1;
+				else map[n1][n2] = T;
+			}
 		}
 		
 		for(int k = 1; k <= N; k++) {
 			for(int n1 = 1; n1 <= N; n1++) {
-				for(int n2 = n1; n2 <= N; n2++) {
+				for(int n2 = 1; n2 <= N; n2++) {
 					map[n1][n2] = Math.min(map[n1][n2], map[n1][k] + map[k][n2]);
 				}
 			}
