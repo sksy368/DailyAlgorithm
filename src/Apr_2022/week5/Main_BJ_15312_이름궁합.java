@@ -1,7 +1,6 @@
 package Apr_2022.week5;
 
 import java.io.*;
-import java.util.*;
 
 public class Main_BJ_15312_이름궁합 {
 	public static void main(String[] args) throws Exception {
