@@ -1,0 +1,11 @@
+package Apr_2022.week5;
+
+public class Programmers_59043_있었는데요없었습니다 {
+	/*
+	SELECT I.ANIMAL_ID, I.NAME
+	FROM ANIMAL_INS I LEFT JOIN ANIMAL_OUTS O
+	    ON I.ANIMAL_ID = O.ANIMAL_ID
+	WHERE I.DATETIME > O.DATETIME
+	ORDER BY I.DATETIME
+	 */
+}
