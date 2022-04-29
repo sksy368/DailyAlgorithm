@@ -1,6 +1,6 @@
 package Apr_2022.week5;
 
-public class Programmers_59042_없어진기록찾기 {
+public class Solution_Programmers_59042_없어진기록찾기 {
 	/*
 	SELECT O.ANIMAL_ID, O.NAME
 	FROM ANIMAL_OUTS O LEFT JOIN ANIMAL_INS I
