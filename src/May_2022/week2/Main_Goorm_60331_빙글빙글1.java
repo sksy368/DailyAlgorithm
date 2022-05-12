@@ -3,7 +3,7 @@ package May_2022.week2;
 import java.io.*;
 import java.util.*;
 
-class Main_Groorm_60331_빙글빙글1 {
+class Main_Goorm_60331_빙글빙글1 {
 	
 	static String[][] answer;
 	static int[] cur;
