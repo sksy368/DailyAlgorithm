@@ -7,7 +7,7 @@ public class Solution_Programmers_64062_징검다리건너기 {
 	        int zeroCnt = 0; // 0인 디딤돌 개수
 	        int answer = 0; // 징검다리를 건넌 니니즈 친구들 수
 	        
-	        loop: while(true) {
+	        while(true) {
 	        	for(int i = 0; i < stones.length; i++) {
 	                if(stones[i] == 0) zeroCnt++;
 	                else {
@@ -15,15 +15,12 @@ public class Solution_Programmers_64062_징검다리건너기 {
 	                    zeroCnt = 0;
 	                }
 	                
-	                if(zeroCnt >= k) break loop;
+	                if(zeroCnt >= k) return answer;
 	            }
-	            
 	            
 	            zeroCnt = 0;
 	            answer++;
 	        }
-	        
-	        return answer;
 	    }
 	}
 }
